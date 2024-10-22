@@ -1,0 +1,37 @@
+// mongo.js
+const mongoose = require("mongoose");
+
+// Connect to MongoDB
+mongoose.connect("mongodb://127.0.0.1:27017/pranalidb")
+  .then(() => {
+    console.log("MongoDB connected");
+  })
+  .catch((error) => {
+    console.log("Failed to connect to MongoDB", error);
+  });
+
+// Define schema with mobile and date of birth
+const userSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    required: true,
+    unique: true // Ensure emails are unique
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  mobile: { // New mobile field
+    type: String,
+    required: true
+  },
+  dob: { // New date of birth field
+    type: Date,
+    required: true
+  }
+});
+
+// Create a model from the schema
+const User = mongoose.model("User", userSchema);
+
+module.exports = User;
